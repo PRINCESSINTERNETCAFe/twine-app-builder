@@ -1,9 +1,6 @@
 name: Build the Twine game
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 
 defaults:
   run:
@@ -65,6 +62,11 @@ jobs:
       - name: Set up Electron app environment
         working-directory: ./app
         run: npm install
+
+      - name: setup windows size to 512x512
+        run: |
+          sed -i'.bak' 's/1024/512/g' app/src/index.js
+          sed -i'.bak' 's/768/512/g' app/src/index.js
 
       - name: move webapp into Electron folder
         run: |
